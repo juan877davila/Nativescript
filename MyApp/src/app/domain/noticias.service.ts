@@ -2,7 +2,7 @@ import { Injectable } from "@angular/core";
 
 @Injectable()
 export class NoticiasService {
-  private news: Array<string>=[];
+  public news: Array<string>=[];
   constructor() {
     
   }
