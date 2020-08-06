@@ -20,6 +20,15 @@ export class SearchComponent implements OnInit {
         this.news.agregar("hola 3!");
     }
 
+    onPull(e) {
+        console.log(e);
+        const pullRefresh = e.object;
+        setTimeout(() => {
+            this.news.agregar("xxxxxxx");
+            pullRefresh.refreshing = false;
+        }, 2000);
+    }
+
     onDrawerButtonTap(): void {
         const sideDrawer = <RadSideDrawer>app.getRootView();
         sideDrawer.showDrawer();
