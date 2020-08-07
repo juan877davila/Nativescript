@@ -17,8 +17,9 @@
 
 <GridLayout class="page__content">
     <Label class="page__content-icon fas" text="&#xf002;"></Label>
+    <SearchForm (search)="buscarAhora($event)" [inicial]="'hola'"></SearchForm>
     <PullToRefresh (refresh)="onPull($event)">
-        <ListView class="list-group" [items]="this.news.buscar()" (itemTap)="onItemTap($event)"
+        <ListView class="list-group" [items]="this.resultados" (itemTap)="onItemTap($event)"
             style="height:1250px">
                 <ng-template let-x="item">
                     <FlexboxLayout flexDirection="row" class="list-group-item">

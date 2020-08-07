@@ -8,7 +8,8 @@ import { NoticiasService } from "../domain/noticias.service";
     templateUrl: "./search.component.html"
 })
 export class SearchComponent implements OnInit {
-
+    resultados: Array<string>;
+    
     constructor(private news:NoticiasService) {
         // Use the component constructor to inject providers.
     }
@@ -36,5 +37,9 @@ export class SearchComponent implements OnInit {
 
     onItemTap(x): void {
         console.dir(x);
+    }
+
+    buscarAhora(s: string){
+        this.resultados=this.news.buscar().filter((x)=> x.indexOf(s)>=0);
     }
 }
