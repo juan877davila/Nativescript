@@ -15,7 +15,7 @@
     <Label text="Search"></Label>
 </ActionBar>
 
-<GridLayout class="page__content">
+<StackLayout class="page page-content" #layout>
     <Label class="page__content-icon fas" text="&#xf002;"></Label>
     <SearchForm (search)="buscarAhora($event)" [inicial]="'hola'"></SearchForm>
     <PullToRefresh (refresh)="onPull($event)">
@@ -35,4 +35,4 @@
                 </ng-template>
             </ListView>    
     </PullToRefresh>
-</GridLayout>
+</StackLayout>
