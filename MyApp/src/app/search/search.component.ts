@@ -1,8 +1,9 @@
 import { Component, OnInit, ViewChild, ElementRef } from "@angular/core";
 import { RadSideDrawer } from "nativescript-ui-sidedrawer";
 import * as app from "tns-core-modules/application";
+import * as Toast from "nativescript-toasts";
 import { NoticiasService } from "../domain/noticias.service";
-import { Color, View } from "tns-core-modules/ui/core/view/view";
+
 
 @Component({
     selector: "Search",
@@ -42,17 +43,13 @@ export class SearchComponent implements OnInit {
     }
 
     buscarAhora(s: string){
-        this.resultados=this.news.buscar().filter((x)=> x.indexOf(s)>=0);
-        
-        const layout=<View>this.layout.nativeElement;
-        layout.animate({
-            backgroundColor: new Color("blue"),
-            duration: 3000,
-            delay: 1500
-        }).then(()=>layout.animate({
-            backgroundColor: new Color("white"),
-            duration: 3000,
-            delay: 1500
-        }));
+        console.dir("buscarAhora" + s);
+        this.news.buscar(s).then((r: any) => {
+            console.log("resultados buscarAhora: " + JSON.stringify(r));
+            this.resultados = r;
+        }, (e) => {
+            console.log("error buscarAhora " + e);
+            Toast.show({text: "Error en la búsqueda", duration: Toast.DURATION.SHORT});
+        });
     }
 }
