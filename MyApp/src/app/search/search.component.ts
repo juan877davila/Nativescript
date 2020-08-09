@@ -11,7 +11,7 @@ import { NoticiasService } from "../domain/noticias.service";
 })
 export class SearchComponent implements OnInit {
     resultados: Array<string>;
-    @ViewChild("layout") layout:ElementRef;
+    @ViewChild("layout",{static: false}) layout:ElementRef;
     
     constructor(private news:NoticiasService) {
         // Use the component constructor to inject providers.
@@ -19,9 +19,6 @@ export class SearchComponent implements OnInit {
 
     ngOnInit(): void {
         // Init your component properties here.
-        this.news.agregar("hola!");
-        this.news.agregar("hola 2!");
-        this.news.agregar("hola 3!");
     }
 
     onPull(e) {
