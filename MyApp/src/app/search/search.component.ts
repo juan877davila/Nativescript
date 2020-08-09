@@ -1,24 +1,35 @@
-import { Component, OnInit, ViewChild, ElementRef } from "@angular/core";
+import { Component, ElementRef, OnInit, ViewChild } from "@angular/core";
+import { Store } from "@ngrx/store";
+import * as SocialShare from "nativescript-social-share";
+import * as Toast from "nativescript-toasts";
 import { RadSideDrawer } from "nativescript-ui-sidedrawer";
 import * as app from "tns-core-modules/application";
-import * as Toast from "nativescript-toasts";
+import { AppState } from "../app.module";
+import { Noticia, NuevaNoticiaAction } from "../domain/noticias-state.model";
 import { NoticiasService } from "../domain/noticias.service";
-
 
 @Component({
     selector: "Search",
+    moduleId: module.id,
     templateUrl: "./search.component.html"
 })
 export class SearchComponent implements OnInit {
-    resultados: Array<string>;
+    resultados: Array<string>=[];
     @ViewChild("layout",{static: false}) layout:ElementRef;
     
-    constructor(private news:NoticiasService) {
+    constructor(private news:NoticiasService, private store: Store<AppState>) {
         // Use the component constructor to inject providers.
     }
 
     ngOnInit(): void {
         // Init your component properties here.
+        this.store.select((state) => state.noticias.sugerida)
+        .subscribe((data) => {
+            const f = data;
+            if (f != null) {
+                Toast.show({text: "Sugerimos leer: " + f.titulo, duration: Toast.DURATION.SHORT});
+            }
+        });
     }
 
     onPull(e) {
@@ -35,8 +46,13 @@ export class SearchComponent implements OnInit {
         sideDrawer.showDrawer();
     }
 
-    onItemTap(x): void {
-        console.dir(x);
+    onItemTap(args): void {
+        this.store.dispatch(new NuevaNoticiaAction(new Noticia(args.view.bindingContext)));
+    }
+
+    onLongPress(s): void {
+        console.log(s);
+        SocialShare.shareText(s, "Asunto: compartido desde el curso!");
     }
 
     buscarAhora(s: string){
